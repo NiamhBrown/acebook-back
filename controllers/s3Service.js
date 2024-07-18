@@ -1,5 +1,4 @@
 const { S3 } = require("aws-sdk");
-// const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const uuid = require("uuid").v4;
 
 exports.s3Uploadv2 = async (files) => {
