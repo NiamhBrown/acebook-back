@@ -103,6 +103,8 @@ const addProfilePicture = async (req, res) => {
     res.status(500).json({ message: "Error uploading profile picture" });
   }
 };
+
+
 const denyFriend = async (req, res) => {
   try {
     const userId = req.user_id;
