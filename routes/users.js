@@ -11,18 +11,11 @@ router.post("/", UsersController.create);
 router.get("/getOneUser", tokenChecker, UsersController.getOneUser);
 router.put("/profile", tokenChecker, UsersController.updateUser);
 
-// router.get("/profile", UsersController.getOneUser)
-// router.get("/profile:{userid}", UsersController.getOneUser)
-
 router.post("/friends", tokenChecker, UsersController.addFriend);
 router.delete("/friends", tokenChecker, UsersController.removeFriend);
 
-router.post(
-  "/profilePicture",
-  tokenChecker,
-  upload.single("profilePicture"),
-  UsersController.addProfilePicture
-);
+//allows upload of multiple files to /upload folder in AWS bucket 
+router.post("/upload", upload.array("file"), UsersController.addProfilePicture);
 // router.delete("/profilePicture", tokenChecker, UsersController.removeProfilePicture);
 
 router.delete("/friends/deny", tokenChecker, UsersController.denyFriend);

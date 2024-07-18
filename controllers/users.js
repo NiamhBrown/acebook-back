@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
+const { s3Uploadv2 } = require("./s3Service");
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();
@@ -92,17 +93,14 @@ const removeFriend = async (req, res) => {
 
 const addProfilePicture = async (req, res) => {
   try {
-    const user = await User.findById({ _id: req.user_id });
-    user.profilePicture = "/uploads/" + req.file.filename;
-    await user.save();
-    res.status(200).json({
-      message: "Profile picture updated",
-      profilePicture: user.profilePicture,
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Error uploading profile picture" });
+    const results = await s3Uploadv2(req.files);
+    console.log(results);
+    return res.json({ status: "success" });
+  } catch (err) {
+    console.log(err);
   }
 };
+
 const denyFriend = async (req, res) => {
   try {
     const userId = req.user_id;
