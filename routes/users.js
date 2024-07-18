@@ -15,7 +15,7 @@ router.post("/friends", tokenChecker, UsersController.addFriend);
 router.delete("/friends", tokenChecker, UsersController.removeFriend);
 
 //allows upload of multiple files to /upload folder in AWS bucket 
-router.post("/upload", upload.array("file"), UsersController.addProfilePicture);
+router.post("/upload", upload.array("file"), tokenChecker, UsersController.addProfilePicture);
 // router.delete("/profilePicture", tokenChecker, UsersController.removeProfilePicture);
 
 router.delete("/friends/deny", tokenChecker, UsersController.denyFriend);

@@ -91,13 +91,42 @@ const removeFriend = async (req, res) => {
   }
 };
 
+//working original
+// const addProfilePicture = async (req, res) => {
+//   try {
+//     const results = await s3Uploadv2(req.files);
+//     console.log(results);
+//     return res.json({ status: "success" });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+//to store filename in mongo too
 const addProfilePicture = async (req, res) => {
   try {
-    const results = await s3Uploadv2(req.files);
-    console.log(results);
+    const files = req.files;
+
+    // Upload to AWS S3
+    const s3Response = await s3Uploadv2(files);
+    console.log("S3 Upload Response:", s3Response);
+
+    // Update user document in MongoDB
+    const userId = req.user_id; // user ID is added to req from authentication middleware
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Store S3 key in user profilePicture field
+    user.profilePicture = s3Response[0].key;
+    user = await user.save();
+
     return res.json({ status: "success" });
   } catch (err) {
-    console.log(err);
+    console.error("Error adding profile picture:", err);
+    return res.status(500).json({ error: "Failed to add profile picture" });
   }
 };
 
