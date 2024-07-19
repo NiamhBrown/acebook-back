@@ -37,15 +37,12 @@ const createComment = async (req, res) => {
         username: user.username
     });
     await comment.save();
-
     post.comments.push(comment._id);
-
     await post.save();
-    //this line is new
     const populatedPost = await Post.findById(postId).populate('comments');
-
     const newToken = generateToken(req.user_id);
     res.status(201).json({ message: "Comment created", token: newToken, comment:comment, post: populatedPost});
+    
 } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
