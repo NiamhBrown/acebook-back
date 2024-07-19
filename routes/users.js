@@ -8,7 +8,8 @@ const Test = require("supertest/lib/test");
 const router = express.Router();
 router.get("/", UsersController.getAllUsers);
 router.post("/", UsersController.create);
-router.get("/getOneUser", tokenChecker, UsersController.getOneUser);
+router.get("/getSignedInUser", tokenChecker, UsersController.getSignedInUser);
+router.get("/getUser", tokenChecker, UsersController.getUser);
 router.put("/profile", tokenChecker, UsersController.updateUser);
 
 router.post("/friends", tokenChecker, UsersController.addFriend);
