@@ -8,10 +8,27 @@ const getAllUsers = async (req, res) => {
   res.status(200).json({ users: users, token: token });
 };
 
-const getOneUser = async (req, res) => {
+const getSignedInUser = async (req, res) => {
   const user = await User.find({ _id: req.user_id });
   const token = generateToken(req.user_id);
   res.status(200).json({ user: user, token: token });
+};
+
+
+const getUser = async (req, res) => {
+  try {
+    const userId = req.query.userId; // Accessing the userId from query parameters
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // Send the user data in the response
+    res.status(200).json({ user: user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Failed to fetch user" });
+  }
 };
 
 const create = (req, res) => {
@@ -176,7 +193,8 @@ const updateUser = async (req, res) => {
 const UsersController = {
   create: create,
   getAllUsers: getAllUsers,
-  getOneUser: getOneUser,
+  getSignedInUser: getSignedInUser,
+  getUser: getUser,
   addFriend: addFriend,
   removeFriend: removeFriend,
   addProfilePicture: addProfilePicture,
