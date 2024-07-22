@@ -29,6 +29,21 @@ const getUser = async (req, res) => {
   }
 };
 
+const checkEmailAvailability = async (req, res) => {
+  const email = req.body.email;
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (user) {
+      return res.status(200).json({ available: false });
+    } else {
+      return res.status(200).json({ available: true });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const create = (req, res) => {
   const forename = req.body.forename;
   const surname = req.body.surname;
@@ -173,6 +188,7 @@ const UsersController = {
   getAllUsers: getAllUsers,
   getSignedInUser: getSignedInUser,
   getUser: getUser,
+  checkEmailAvailability: checkEmailAvailability,
   addFriend: addFriend,
   removeFriend: removeFriend,
   addProfilePicture: addProfilePicture,

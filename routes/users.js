@@ -8,6 +8,7 @@ const Test = require("supertest/lib/test");
 
 router.get("/", UsersController.getAllUsers);
 router.post("/", UsersController.create);
+router.post("/check-email", UsersController.checkEmailAvailability);
 router.get("/getSignedInUser", tokenChecker, UsersController.getSignedInUser);
 router.get("/getUser", tokenChecker, UsersController.getUser);
 router.put("/profile", tokenChecker, UsersController.updateUser);
@@ -17,6 +18,11 @@ router.delete("/friends", tokenChecker, UsersController.removeFriend);
 router.delete("/friends/deny", tokenChecker, UsersController.denyFriend);
 
 //allows upload of multiple files to /upload folder in AWS bucket using multer
-router.post("/upload", upload.array("file"), tokenChecker, UsersController.addProfilePicture);
+router.post(
+  "/upload",
+  upload.array("file"),
+  tokenChecker,
+  UsersController.addProfilePicture
+);
 
 module.exports = router;
