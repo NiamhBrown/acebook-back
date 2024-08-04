@@ -11,8 +11,7 @@
   - [Prerequisites](#prerequisites)
   - [Front-End Setup](#front-end-setup)
   - [Back-End Setup](#back-end-setup)
-- [Usage](#usage)
-- [API Endpoints](#api-endpoints)
+
 
 ## About the Project
 
@@ -38,7 +37,7 @@
 
 - [Node.js](https://nodejs.org/)
 - [Express](https://expressjs.com/)
-- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [Mongoose](https://mongoosejs.com/)
 - [AWS S3](https://aws.amazon.com/s3/)
 - [JWT](https://jwt.io/)
@@ -46,6 +45,7 @@
 ## Architecture
 
 The **Acebook** project is structured as a microservices architecture with a separate front-end react app and a back-end API server.
+This current repo is the back-end, the fron-end can be found [here](https://github.com/NiamhBrown/acebook-front).
 
 ![Architecture Diagram](full-stack-architecture.png)
 
